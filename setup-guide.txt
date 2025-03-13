@@ -1,0 +1,225 @@
+# TextBuilder.ai Clone - Setup Guide
+
+This guide will walk you through setting up the TextBuilder.ai clone application for development or production use.
+
+## Prerequisites
+
+- Node.js (v16+)
+- MongoDB
+- Redis
+- OpenAI API key (for GPT-4)
+- Anthropic API key (for Claude)
+- AWS S3 bucket (for image storage)
+- Docker and Docker Compose (optional)
+
+## Environment Setup
+
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/textbuilder-clone.git
+cd textbuilder-clone
+```
+
+### Step 2: Environment Variables
+
+#### Backend
+
+1. Create a `.env` file in the `backend` directory:
+
+```bash
+cd backend
+cp .env.example .env
+```
+
+2. Edit the `.env` file with your own values:
+
+```
+# Server Configuration
+PORT=4000
+NODE_ENV=development
+
+# Database Configuration
+MONGO_URI=mongodb://localhost:27017/textbuilder
+
+# Redis Configuration
+REDIS_HOST=localhost
+REDIS_PORT=6379
+
+# JWT Authentication
+JWT_SECRET=your_secure_jwt_secret
+JWT_EXPIRE=30d
+JWT_COOKIE_EXPIRE=30
+
+# AI API Keys
+OPENAI_API_KEY=your_openai_api_key
+ANTHROPIC_API_KEY=your_anthropic_api_key
+FLUX_API_KEY=your_flux_api_key
+RECRAFT_API_KEY=your_recraft_api_key
+
+# AWS S3 Configuration
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+AWS_BUCKET_NAME=your_bucket_name
+AWS_REGION=your_aws_region
+
+# Payment Gateway
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
+
+# WordPress
+WP_API_DEFAULT_TIMEOUT=30000
+```
+
+#### Frontend
+
+1. Create a `.env.local` file in the `frontend` directory:
+
+```bash
+cd frontend
+echo "NEXT_PUBLIC_API_URL=http://localhost:4000/api" > .env.local
+```
+
+### Step 3: Install Dependencies
+
+1. Install backend dependencies:
+
+```bash
+cd backend
+npm install
+```
+
+2. Install frontend dependencies:
+
+```bash
+cd frontend
+npm install
+```
+
+### Step 4: Database Setup
+
+1. Start MongoDB (if not already running):
+
+```bash
+# Using the MongoDB service
+sudo service mongod start
+
+# Or using Docker
+docker run -d -p 27017:27017 --name mongodb mongo
+```
+
+2. Start Redis (if not already running):
+
+```bash
+# Using the Redis service
+sudo service redis-server start
+
+# Or using Docker
+docker run -d -p 6379:6379 --name redis redis
+```
+
+## Running the Application
+
+### Method 1: Manual Start
+
+1. Start the backend:
+
+```bash
+cd backend
+npm run dev
+```
+
+2. In a separate terminal, start the frontend:
+
+```bash
+cd frontend
+npm run dev
+```
+
+### Method 2: Using Docker Compose
+
+1. Start all services using Docker Compose:
+
+```bash
+docker-compose up
+```
+
+2. Or use the convenience script:
+
+```bash
+chmod +x start.sh
+./start.sh
+```
+
+### Accessing the Application
+
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:4000
+
+## Setting Up for Production
+
+### Building for Production
+
+1. Build the backend:
+
+```bash
+cd backend
+npm run build
+```
+
+2. Build the frontend:
+
+```bash
+cd frontend
+npm run build
+```
+
+### Deployment Options
+
+#### Option 1: Traditional Server
+
+1. Set up a production server with Node.js, MongoDB, and Redis
+2. Configure Nginx as a reverse proxy
+3. Use PM2 or similar process manager to run the Node.js backend
+4. Set environment variables to production values
+
+#### Option 2: Docker Deployment
+
+1. Create production Docker Compose file:
+   ```
+   docker-compose -f docker-compose.prod.yml up -d
+   ```
+
+#### Option 3: Cloud Deployment
+
+1. Deploy backend to services like AWS Elastic Beanstalk, Google App Engine, or Heroku
+2. Deploy frontend to services like Vercel, Netlify, or AWS Amplify
+3. Use managed services for MongoDB (MongoDB Atlas) and Redis (Redis Cloud)
+
+## Troubleshooting
+
+### Common Issues
+
+1. **MongoDB Connection Error**:
+   - Check that MongoDB is running
+   - Verify MONGO_URI in .env file
+
+2. **Redis Connection Error**:
+   - Check that Redis is running
+   - Verify REDIS_HOST and REDIS_PORT in .env file
+
+3. **API Key Issues**:
+   - Verify API keys for OpenAI, Anthropic, etc.
+   - Check for rate limits or billing issues
+
+4. **Frontend API Connection Error**:
+   - Verify NEXT_PUBLIC_API_URL in frontend .env.local
+   - Check if backend is running
+
+### Getting Help
+
+If you encounter issues not covered here, please:
+
+1. Check the logs in the terminal
+2. Review the project documentation
+3. Open an issue on the GitHub repository

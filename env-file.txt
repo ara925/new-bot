@@ -1,0 +1,34 @@
+# Server Configuration
+PORT=4000
+NODE_ENV=development
+
+# Database Configuration
+MONGO_URI=mongodb://localhost:27017/textbuilder
+
+# Redis Configuration
+REDIS_HOST=localhost
+REDIS_PORT=6379
+
+# JWT Authentication
+JWT_SECRET=your_jwt_secret_key_goes_here
+JWT_EXPIRE=30d
+JWT_COOKIE_EXPIRE=30
+
+# AI API Keys
+OPENAI_API_KEY=your_openai_api_key_goes_here
+ANTHROPIC_API_KEY=your_anthropic_api_key_goes_here
+FLUX_API_KEY=your_flux_api_key_goes_here
+RECRAFT_API_KEY=your_recraft_api_key_goes_here
+
+# AWS S3 Configuration
+AWS_ACCESS_KEY_ID=your_aws_access_key_goes_here
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key_goes_here
+AWS_BUCKET_NAME=textbuilder-images
+AWS_REGION=us-east-1
+
+# Payment Gateway
+STRIPE_SECRET_KEY=your_stripe_secret_key_goes_here
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret_goes_here
+
+# WordPress
+WP_API_DEFAULT_TIMEOUT=30000

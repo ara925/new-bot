@@ -1,0 +1,198 @@
+# TextBuilder.ai Clone - Project Overview
+
+## Architecture Overview
+
+This project is a full-stack application with a clear separation between frontend and backend:
+
+### Frontend (Next.js)
+- React-based UI with Next.js framework
+- Tailwind CSS for styling
+- React Context API for state management
+- Axios for API requests
+
+### Backend (Express)
+- Node.js with Express framework
+- TypeScript for type safety
+- MongoDB for database
+- Redis for queue management and caching
+- JWT for authentication
+- Integration with AI models (OpenAI, Claude, LLaMA)
+
+## Key Components
+
+### Backend Components
+
+#### Authentication System
+- User model and authentication middleware
+- JWT token generation and validation
+- Password reset functionality
+
+#### Content Generation Pipeline
+- AI service integrations with multiple models
+- Worker system for background processing
+- Credit management system
+
+#### WordPress Integration
+- WordPress API client for automatic publishing
+- Site connection management
+- Publishing scheduling
+
+#### Image Generation
+- AI Image generation with various services
+- S3 storage integration
+- Image manipulation utilities
+
+### Frontend Components
+
+#### Authentication
+- Login, registration, and password reset UIs
+- AuthContext for global authentication state
+- Protected routes for authenticated content
+
+#### Content Creation
+- AI Writer for single article generation
+- Auto Writer for bulk generation
+- Long-form Writer for assisted writing
+- Image Generator for AI images
+
+#### Dashboard and Management
+- User dashboard with statistics
+- Article management system
+- WordPress site management
+- Settings and preferences
+
+## File Structure
+
+```
+/
+├── frontend/                   # Next.js application
+│   ├── src/
+│   │   ├── components/         # React components
+│   │   │   ├── aiwriter/       # AI Writer components
+│   │   │   ├── articles/       # Article management components
+│   │   │   ├── autowriter/     # Auto Writer components
+│   │   │   ├── common/         # Shared UI components
+│   │   │   ├── credits/        # Credit management components
+│   │   │   ├── dashboard/      # Dashboard components
+│   │   │   ├── layouts/        # Layout components
+│   │   │   ├── longform/       # Long-form Writer components
+│   │   │   └── settings/       # Settings components
+│   │   ├── contexts/           # React contexts
+│   │   ├── hooks/              # Custom React hooks
+│   │   ├── pages/              # Next.js pages
+│   │   ├── styles/             # CSS/styling
+│   │   └── utils/              # Helper utilities
+│   ├── public/                 # Static assets
+│   ├── package.json            # Frontend dependencies
+│   └── next.config.js          # Next.js configuration
+│
+├── backend/                    # Express API server
+│   ├── src/
+│   │   ├── config/             # Configuration files
+│   │   ├── controllers/        # Request handlers
+│   │   ├── middleware/         # Express middleware
+│   │   ├── models/             # Mongoose models
+│   │   ├── routes/             # Express routes
+│   │   ├── services/           # Business logic
+│   │   │   ├── ai/             # AI model integrations
+│   │   │   ├── images/         # Image generation
+│   │   │   ├── wordpress/      # WordPress integration
+│   │   │   └── generator/      # Content generation
+│   │   ├── utils/              # Helper utilities
+│   │   ├── workers/            # Background job workers
+│   │   ├── app.ts              # Express application setup
+│   │   └── server.ts           # Server entry point
+│   ├── package.json            # Backend dependencies
+│   └── tsconfig.json           # TypeScript configuration
+│
+├── infrastructure/             # Docker and deployment
+│   ├── docker-compose.yml
+│   └── nginx/                  # Nginx config (if applicable)
+│
+├── package.json                # Root package.json
+└── README.md                   # Project documentation
+```
+
+## Key Connections
+
+### Frontend to Backend Integration
+
+1. The frontend communicates with the backend through the `/utils/api.ts` file, which:
+   - Provides a centralized API client using Axios
+   - Handles authentication tokens
+   - Provides typed functions for all API endpoints
+
+2. Authentication flow:
+   - Login/registration through frontend forms
+   - JWT token stored in cookies
+   - Token included in Authorization header for API requests
+   - Protected routes check authentication status
+
+### Backend Data Flow
+
+1. Request flow:
+   - Client request → Express middleware → Route handler → Controller → Service → Database/External API
+   - Response follows reverse path
+
+2. Content generation flow:
+   - Client request → Controller → Queue job → Worker processes job → Update database → Notify client
+
+3. WordPress publishing flow:
+   - Client request → WordPress service → WordPress API → Update article status → Response to client
+
+## Running the Project
+
+1. Start MongoDB and Redis
+2. Start the backend:
+   ```
+   cd backend
+   npm run dev
+   ```
+3. Start the frontend:
+   ```
+   cd frontend
+   npm run dev
+   ```
+
+Alternatively, use Docker Compose:
+```
+docker-compose up
+```
+
+## Development Workflow
+
+1. Frontend Routes:
+   - `/` - Landing page/redirect to dashboard
+   - `/login`, `/register` - Authentication
+   - `/dashboard` - User dashboard
+   - `/ai-writer` - Single article generation
+   - `/auto-writer` - Bulk article generation
+   - `/long-form-writer` - Assisted writing
+   - `/articles` - Article management
+   - `/settings/*` - User settings
+   - `/credits` - Credit management
+
+2. Backend API Endpoints:
+   - `/api/auth/*` - Authentication endpoints
+   - `/api/articles/*` - Article management
+   - `/api/generate/*` - Content generation
+   - `/api/wordpress/*` - WordPress integration
+   - `/api/images/*` - Image generation
+   - `/api/settings/*` - User settings
+   - `/api/payment/*` - Payment processing
+
+## Deployment Considerations
+
+1. Environment Variables:
+   - AI API keys
+   - Database connection strings
+   - JWT secrets
+   - AWS credentials
+   - Stripe API keys
+
+2. Production Setup:
+   - Use Docker Compose or Kubernetes
+   - Configure Nginx as reverse proxy
+   - Set up MongoDB Atlas or similar managed database
+   - Use Redis Cloud or similar for Redis
+   - Configure proper SSL/TLS
