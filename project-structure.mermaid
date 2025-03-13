@@ -1,0 +1,51 @@
+flowchart TD
+    Root["TextBuilder Clone"]
+    Root --> Frontend
+    Root --> Backend
+    
+    subgraph Frontend["Frontend (Next.js)"]
+        FE_Config["/config - Environment configs"]
+        FE_Public["/public - Static assets"]
+        FE_Src["src/"]
+        
+        FE_Src --> FE_Components["components/ - UI components"]
+        FE_Src --> FE_Pages["pages/ - Route pages"]
+        FE_Src --> FE_Styles["styles/ - CSS/SCSS"]
+        FE_Src --> FE_Utils["utils/ - Helper functions"]
+        FE_Src --> FE_Contexts["contexts/ - React contexts"]
+        FE_Src --> FE_Hooks["hooks/ - Custom hooks"]
+        
+        FE_Components --> FE_Common["common/ - Shared components"]
+        FE_Components --> FE_Dashboard["dashboard/ - Dashboard UI"]
+        FE_Components --> FE_AutoWriter["autowriter/ - Auto writer UI"]
+        FE_Components --> FE_AIWriter["aiwriter/ - AI writer UI"]
+        FE_Components --> FE_LongForm["longform/ - Long form writer"]
+        FE_Components --> FE_Settings["settings/ - Settings UI"]
+    end
+    
+    subgraph Backend["Backend (Node.js/Express)"]
+        BE_Config["config/ - Environment configs"]
+        BE_Controllers["controllers/ - Route handlers"]
+        BE_Models["models/ - Database models"]
+        BE_Routes["routes/ - API routes"]
+        BE_Services["services/ - Business logic"]
+        BE_Utils["utils/ - Helper functions"]
+        BE_Middleware["middleware/ - Express middleware"]
+        BE_Workers["workers/ - Background jobs"]
+        
+        BE_Services --> BE_AI["ai/ - AI model integrations"]
+        BE_Services --> BE_WordPress["wordpress/ - WP integration"] 
+        BE_Services --> BE_Auth["auth/ - Authentication"]
+        BE_Services --> BE_Billing["billing/ - Payment processing"]
+        BE_Services --> BE_Generator["generator/ - Content generation"]
+        BE_Services --> BE_Credits["credits/ - Credits management"]
+    end
+    
+    subgraph Infrastructure["Infrastructure"]
+        Infra_Docker["Docker - Containerization"]
+        Infra_DB["MongoDB - Database"] 
+        Infra_Redis["Redis - Cache & queue"]
+        Infra_Deploy["Deployment configs"]
+    end
+    
+    Root --> Infrastructure
